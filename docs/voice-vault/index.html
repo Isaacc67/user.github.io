@@ -1,0 +1,454 @@
+<title>Client Voice Vault</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --paper:   #F1F1F4;
+    --card:    #FFFFFF;
+    --sunk:    #E7E7EC;
+    --ink:     #16151A;
+    --muted:   #63616E;
+    --rule:    #D8D7DF;
+    --hair:    #E3E2E9;
+    --accent:  #4632B8;
+    --accent-soft: #EAE7F9;
+    --ochre:   #8A6410;
+    --ochre-bg:#F7EFDC;
+    --good:    #2C6A44;
+    --bad:     #9A2F2A;
+
+    --display: "Faustina", Georgia, "Times New Roman", serif;
+    --body:    "Karla", "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono:    "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:   #131218;
+      --card:    #1C1B23;
+      --sunk:    #24222C;
+      --ink:     #EDECF2;
+      --muted:   #9D9BAB;
+      --rule:    #322F3D;
+      --hair:    #2A2833;
+      --accent:  #A08CFF;
+      --accent-soft: #241F3C;
+      --ochre:   #D9AE5C;
+      --ochre-bg:#2A2318;
+      --good:    #6FBE87;
+      --bad:     #E0857E;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:   #131218;
+    --card:    #1C1B23;
+    --sunk:    #24222C;
+    --ink:     #EDECF2;
+    --muted:   #9D9BAB;
+    --rule:    #322F3D;
+    --hair:    #2A2833;
+    --accent:  #A08CFF;
+    --accent-soft: #241F3C;
+    --ochre:   #D9AE5C;
+    --ochre-bg:#2A2318;
+    --good:    #6FBE87;
+    --bad:     #E0857E;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 900px; margin: 0 auto; padding: 0 24px 100px; }
+  p { max-width: 62ch; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  a:focus-visible, .btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---- pre-order notice ---- */
+  .notice {
+    background: var(--ochre-bg);
+    border-bottom: 1px solid color-mix(in srgb, var(--ochre) 35%, transparent);
+    margin: 0 -24px 0;
+    padding: 11px 24px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ochre);
+  }
+  .notice b { font-weight: 500; }
+
+  /* ---- hero ---- */
+  .hero { padding: 66px 0 54px; display: flex; flex-direction: column; gap: 24px; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(40px, 7vw, 66px);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+    margin: 0;
+    max-width: 15ch;
+    text-wrap: balance;
+  }
+  .sub {
+    font-family: var(--display);
+    font-size: clamp(19px, 2.6vw, 23px);
+    line-height: 1.48;
+    color: var(--muted);
+    margin: 0;
+    max-width: 46ch;
+  }
+  .buy { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 8px; }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--card);
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+    padding: 15px 28px;
+    text-decoration: none;
+    border-radius: 2px;
+  }
+  .btn:hover { background: color-mix(in srgb, var(--accent) 82%, var(--ink)); }
+  .pricing { font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .pricing .now { color: var(--ink); font-size: 17px; font-weight: 500; }
+  .pricing .was { text-decoration: line-through; }
+
+  /* ---- sections ---- */
+  section { padding: 46px 0; border-top: 1px solid var(--rule); display: flex; flex-direction: column; gap: 22px; }
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(26px, 3.6vw, 34px);
+    line-height: 1.18;
+    letter-spacing: -0.014em;
+    margin: 0;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  h3 { font-family: var(--body); font-weight: 700; font-size: 16px; margin: 0; }
+  .lede { font-size: 18px; }
+
+  .pain { display: flex; flex-direction: column; gap: 14px; }
+  .pain-item { display: grid; grid-template-columns: 26px 1fr; gap: 14px; align-items: start; }
+  .pain-item .mark { font-family: var(--mono); color: var(--bad); font-size: 15px; padding-top: 2px; }
+  .pain-item p { margin: 0; }
+
+  /* ---- mock screenshots ---- */
+  .shot { display: flex; flex-direction: column; gap: 12px; }
+  .shot-cap { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .shot-cap b { color: var(--ink); font-weight: 500; }
+  .frame {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px -12px rgba(0,0,0,.16);
+  }
+  .frame-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 13px;
+    background: var(--sunk);
+    border-bottom: 1px solid var(--hair);
+    font-family: var(--mono); font-size: 11.5px; color: var(--muted);
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--rule); flex: none; }
+  .frame-body { padding: 18px; overflow-x: auto; }
+
+  table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  thead th {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted); font-weight: 500;
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.client { font-weight: 600; white-space: nowrap; }
+  .pill {
+    display: inline-block; font-family: var(--mono); font-size: 10.5px;
+    padding: 2px 7px; border-radius: 10px; white-space: nowrap;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .pill.done { background: color-mix(in srgb, var(--good) 15%, transparent); color: var(--good); }
+  .pill.wait { background: var(--ochre-bg); color: var(--ochre); }
+
+  .profile { display: flex; flex-direction: column; gap: 16px; font-size: 14px; }
+  .profile-h {
+    font-family: var(--display); font-weight: 600; font-size: 21px; margin: 0;
+  }
+  .attr { display: grid; grid-template-columns: 150px 1fr; gap: 10px 18px; font-size: 13.5px; }
+  .attr dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+  .attr dd { margin: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-family: var(--mono); font-size: 11px; padding: 2px 8px; background: var(--sunk); border-radius: 3px; }
+  .chip.no { background: color-mix(in srgb, var(--bad) 13%, transparent); color: var(--bad); text-decoration: line-through; }
+
+  pre {
+    margin: 0; font-family: var(--mono); font-size: 12.5px; line-height: 1.6;
+    white-space: pre-wrap; color: var(--ink);
+  }
+  pre .cmt { color: var(--muted); }
+
+  /* ---- contents ---- */
+  .contents { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .content-item { background: var(--card); padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; }
+  .content-item p { margin: 0; font-size: 14.5px; color: var(--muted); }
+
+  /* ---- fit / not fit ---- */
+  .fit { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 26px; }
+  .fit-col { display: flex; flex-direction: column; gap: 11px; }
+  .fit-col ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .fit-col li { display: grid; grid-template-columns: 20px 1fr; gap: 9px; font-size: 15px; align-items: start; }
+  .fit-col .m { font-family: var(--mono); padding-top: 1px; }
+  .yes .m { color: var(--good); }
+  .no .m { color: var(--bad); }
+
+  /* ---- promise ---- */
+  .promise {
+    background: var(--card); border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    padding: 24px 26px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .promise p { margin: 0; }
+
+  /* ---- faq ---- */
+  .faq { display: flex; flex-direction: column; }
+  details { border-top: 1px solid var(--hair); padding: 0; }
+  details:last-of-type { border-bottom: 1px solid var(--hair); }
+  summary {
+    cursor: pointer; padding: 15px 0; font-weight: 600; font-size: 15.5px;
+    list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-family: var(--mono); color: var(--muted); font-size: 17px; flex: none; }
+  details[open] summary::after { content: "\2013"; }
+  details p { margin: 0 0 16px; font-size: 15px; color: var(--muted); }
+
+  .close { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; padding-top: 46px; border-top: 1px solid var(--rule); }
+  .close h2 { max-width: 18ch; }
+
+  footer { padding-top: 34px; font-size: 13px; color: var(--muted); }
+  footer p { max-width: 70ch; margin: 0 0 8px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  @media (max-width: 620px) {
+    .attr { grid-template-columns: 1fr; gap: 3px 0; }
+    .attr dd { margin-bottom: 9px; }
+  }
+</style>
+
+<div class="page">
+
+  <div class="notice"><b>Pre-order</b> — the Vault is not built yet. Founding price, delivered within 7 days of purchase, or your money back.</div>
+
+  <header class="hero">
+    <span class="label">Notion template for agency content teams</span>
+    <h1>Stop rewriting your freelancers' work to fix the tone.</h1>
+    <p class="sub">The Client Voice Vault turns a kickoff call and a pile of old posts into a voice profile any writer can follow — and a prompt block that gets AI on-brand the first time.</p>
+    <div class="buy">
+      <!-- Replace # with your Gumroad product URL -->
+      <a class="btn" href="#">Pre-order at $49</a>
+      <span class="pricing">
+        <span class="now">$49</span> founding price · <span class="was">$99</span> at launch<br>
+        Ships within 7 days. Full refund if it doesn't.
+      </span>
+    </div>
+  </header>
+
+  <section>
+    <span class="label">The problem</span>
+    <h2>Every client sounds different. Every freelancer sounds like themselves.</h2>
+    <div class="pain">
+      <div class="pain-item"><span class="mark">01</span><p>A new client hands over brand PDFs, a two-hour kickoff recording, and three years of old posts. Someone has to read all of it and work out how this client actually sounds.</p></div>
+      <div class="pain-item"><span class="mark">02</span><p>That someone writes half a page of guidance. Every freelancer reads it differently. Drafts come back in four different voices.</p></div>
+      <div class="pain-item"><span class="mark">03</span><p>You rewrite them. Not for substance — for tone. Every week, on every client.</p></div>
+      <div class="pain-item"><span class="mark">04</span><p>A new writer joins and takes six weeks to sound right. The person who knew the voice leaves, and it goes with them.</p></div>
+    </div>
+    <p class="lede">The voice was never written down in a form anyone could actually execute. That's the whole problem, and it's a structure problem, not a talent problem.</p>
+  </section>
+
+  <section>
+    <span class="label">What you get</span>
+    <h2>A repeatable intake that ends in something a writer can follow.</h2>
+    <p>Drop in the transcript, the brand docs, and a handful of posts the client loved. Work through the guided prompt sequence. Out comes a structured voice profile — and a prompt block your writers paste into whatever AI tool they already use.</p>
+
+    <div class="shot">
+      <div class="frame">
+        <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Voice Vault — All clients</span></div>
+        <div class="frame-body">
+          <table>
+            <thead><tr><th>Client</th><th>Status</th><th>Register</th><th>Reading age</th><th>Last audit</th></tr></thead>
+            <tbody>
+              <tr><td class="client">Kettleridge Logistics</td><td><span class="pill done">Profile live</span></td><td>Plain / technical</td><td>Grade 9</td><td>12 Aug</td></tr>
+              <tr><td class="client">Verity Dental Group</td><td><span class="pill done">Profile live</span></td><td>Warm / reassuring</td><td>Grade 7</td><td>28 Jul</td></tr>
+              <tr><td class="client">Foxglove Studio</td><td><span class="pill">In intake</span></td><td>Playful / spare</td><td>Grade 8</td><td>—</td></tr>
+              <tr><td class="client">Marchetti &amp; Sons</td><td><span class="pill wait">Awaiting kickoff</span></td><td>—</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="shot-cap"><b>1 · The vault.</b> Every client's voice in one place, with an audit date so profiles don't quietly rot. Example data shown.</p>
+    </div>
+
+    <div class="shot">
+      <div class="frame">
+        <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Kettleridge Logistics — Voice profile</span></div>
+        <div class="frame-body">
+          <div class="profile">
+            <p class="profile-h">Kettleridge Logistics</p>
+            <dl class="attr">
+              <dt>Register</dt><dd>Plain and technical. Talks to operations managers, not executives. Assumes the reader knows what a load board is.</dd>
+              <dt>Sentence rhythm</dt><dd>Short. Average 14 words, rarely over 25. One idea per sentence. Paragraphs of 2–3 sentences.</dd>
+              <dt>Point of view</dt><dd>"We" for the company, "you" for the reader. Never "one" or the passive voice.</dd>
+              <dt>Evidence habit</dt><dd>Every claim carries a number or a named customer. No adjective survives without one.</dd>
+              <dt>Banned words</dt>
+              <dd><div class="chips">
+                <span class="chip no">revolutionise</span><span class="chip no">seamless</span><span class="chip no">game-changer</span><span class="chip no">leverage (verb)</span><span class="chip no">in today's fast-paced</span><span class="chip no">solutions</span>
+              </div></dd>
+              <dt>House words</dt>
+              <dd><div class="chips">
+                <span class="chip">lane</span><span class="chip">dwell time</span><span class="chip">on-time rate</span><span class="chip">dispatcher</span><span class="chip">backhaul</span>
+              </div></dd>
+              <dt>Formatting</dt><dd>Sub-heads every 200 words. Bulleted lists max 5 items. Oxford comma. Numerals for anything over ten.</dd>
+              <dt>Tells</dt><dd>Opens on the operational problem, never on the company. Closes with the next concrete step, never a summary.</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <p class="shot-cap"><b>2 · The profile.</b> Specific enough to be checked against a draft. Example client, illustrative content.</p>
+    </div>
+
+    <div class="shot">
+      <div class="frame">
+        <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Generated prompt block — hand to any writer</span></div>
+        <div class="frame-body">
+<pre><span class="cmt"># Paste above your brief. Works in ChatGPT, Claude, or your CMS assistant.</span>
+
+You are writing as Kettleridge Logistics, a freight operations
+platform. Your reader is a dispatcher or ops manager at a mid-size
+carrier. They know the industry; do not explain it to them.
+
+VOICE
+- Sentences average 14 words. One idea each. Never exceed 25.
+- Paragraphs of 2-3 sentences.
+- "We" = Kettleridge. "You" = the reader. Active voice only.
+- Every claim carries a number or a named customer. No exceptions.
+
+NEVER USE
+revolutionise · seamless · game-changer · leverage (as a verb)
+"in today's fast-paced" · "solutions" as a noun for the product
+
+STRUCTURE
+Open on the operational problem, not on Kettleridge. Sub-head every
+200 words. Lists max 5 items. Close on the next concrete step.
+
+BEFORE YOU RETURN THE DRAFT
+Check it against every rule above and fix what fails. Then list
+anything you were unsure of at the bottom under "Flags".</pre>
+        </div>
+      </div>
+      <p class="shot-cap"><b>3 · The prompt block.</b> Generated from the profile. This is what actually ends the rewriting.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="label">Contents</span>
+    <h2>What's in the file</h2>
+    <div class="contents">
+      <div class="content-item"><h3>The vault database</h3><p>One row per client, with profile status, audit dates, and every asset linked to the client it belongs to.</p></div>
+      <div class="content-item"><h3>The intake sequence</h3><p>Eleven prompts in order, run against a transcript and past content. Each one fills a named field in the profile.</p></div>
+      <div class="content-item"><h3>The profile template</h3><p>Fourteen fields covering register, rhythm, POV, evidence habits, banned and house words, formatting, and structural tells.</p></div>
+      <div class="content-item"><h3>The prompt-block generator</h3><p>Assembles the profile into a paste-ready block, in four variants: long-form, social, email, and landing copy.</p></div>
+      <div class="content-item"><h3>The drift audit</h3><p>A quarterly check that scores recent published work against the profile, so you catch voice drift before the client does.</p></div>
+      <div class="content-item"><h3>The writer handoff view</h3><p>A filtered view a freelancer can be given access to — the prompt block and the rules, and nothing else in your workspace.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="label">Fit</span>
+    <h2>Who this is for, and who it isn't</h2>
+    <div class="fit">
+      <div class="fit-col yes">
+        <h3>Buy it if</h3>
+        <ul>
+          <li><span class="m">✓</span><span>You run content for more than two clients and route drafts through freelancers.</span></li>
+          <li><span class="m">✓</span><span>You edit for tone more often than for substance.</span></li>
+          <li><span class="m">✓</span><span>Onboarding a new writer costs you weeks of rewrites.</span></li>
+          <li><span class="m">✓</span><span>You already use Notion, or don't mind starting.</span></li>
+        </ul>
+      </div>
+      <div class="fit-col no">
+        <h3>Skip it if</h3>
+        <ul>
+          <li><span class="m">✗</span><span>You write everything yourself for one brand. You already hold the voice in your head.</span></li>
+          <li><span class="m">✗</span><span>You want software that writes the posts. This structures the instructions; your writers still write.</span></li>
+          <li><span class="m">✗</span><span>You need it inside Google Docs or Airtable. Notion only at launch.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="label">The deal</span>
+    <h2>You're buying something that doesn't exist yet.</h2>
+    <div class="promise">
+      <p>Being straight with you: this is a pre-order. The Vault is specified, not built. I'm selling it first because I'd rather find out now whether content leads actually want this than spend a month building it on a hunch.</p>
+      <p><b>What you get for $49:</b> the finished template within 7 days, the launch price locked at half of $99, and every future update free.</p>
+      <p><b>If I miss the 7 days,</b> or you open it and it isn't what this page described, reply to your receipt and I'll refund you in full. No forms, no questions.</p>
+      <p><b>What I'd like in return</b> — not required — is fifteen minutes on a call about how your team handles client voice today. That conversation shapes what gets built.</p>
+    </div>
+  </section>
+
+  <section class="faq">
+    <span class="label">Questions</span>
+    <h2>Before you buy</h2>
+    <details>
+      <summary>Why not just tell ChatGPT to "write in our client's voice"?</summary>
+      <p>Because "our client's voice" isn't information — it's a gesture at information. The model fills the gap with its own defaults, which is exactly why AI drafts all sound the same. A profile that names the sentence length, the banned words, and the structural tells gives it something to actually follow, and gives you something to check the draft against.</p>
+    </details>
+    <details>
+      <summary>Does this work with Claude, ChatGPT, Gemini?</summary>
+      <p>All of them. The output is plain text you paste in. Nothing is locked to a provider, and nothing breaks when you switch.</p>
+    </details>
+    <details>
+      <summary>How long does one client take to set up?</summary>
+      <p>Around 30 minutes with a kickoff transcript and five pieces of content the client has approved. The eleven-prompt sequence does the extraction; you're editing its answers, not writing from scratch.</p>
+    </details>
+    <details>
+      <summary>Is this just a prompt pack?</summary>
+      <p>No. Prompt packs give you prompts and leave you to manage the output. This is a database of client profiles, a pipeline that produces them, and a generated artefact your writers use. The prompts are one part of it.</p>
+    </details>
+    <details>
+      <summary>I use Airtable, not Notion.</summary>
+      <p>Notion only at launch. If enough buyers ask for Airtable, I'll port it and you'll get it free — say so when you order.</p>
+    </details>
+    <details>
+      <summary>Who's building this?</summary>
+      <p>One person, working in the open. That's also why the refund promise is unconditional: a solo builder who burns early buyers doesn't get a second product.</p>
+    </details>
+  </section>
+
+  <div class="close">
+    <h2>Lock the founding price.</h2>
+    <p>$49 now, $99 at launch. Delivered within 7 days or refunded in full.</p>
+    <!-- Replace # with your Gumroad product URL -->
+    <a class="btn" href="#">Pre-order the Client Voice Vault</a>
+  </div>
+
+  <footer>
+    <p>Client names, profiles, and data shown on this page are illustrative examples, not real customers. No testimonials appear here because there aren't any yet — this is a pre-order for a product that hasn't shipped.</p>
+  </footer>
+
+</div>
