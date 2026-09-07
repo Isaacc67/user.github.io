@@ -1,0 +1,115 @@
+<title>Voice Vault — cover image source</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Faustina:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Karla:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --paper:#F1F1F4; --card:#FFF; --sunk:#E7E7EC; --ink:#16151A; --muted:#63616E;
+    --rule:#D8D7DF; --hair:#E3E2E9; --accent:#4632B8; --accent-soft:#EAE7F9;
+    --good:#2C6A44; --bad:#9A2F2A; --ochre:#8A6410; --ochre-bg:#F7EFDC;
+    --display:"Faustina",Georgia,serif; --body:"Karla",Helvetica,Arial,sans-serif;
+    --mono:"IBM Plex Mono",Menlo,monospace;
+  }
+  body{margin:0;background:#fff;font-family:var(--body);color:var(--ink);}
+  .shot{
+    width:1280px;height:720px;background:var(--paper);
+    display:flex;flex-direction:column;gap:20px;
+    padding:52px 60px;box-sizing:border-box;overflow:hidden;
+  }
+  .cap{display:flex;align-items:baseline;gap:14px;flex:none;}
+  .cap .n{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);}
+  .cap .t{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:-.01em;}
+  .frame{
+    background:var(--card);border:1px solid var(--rule);border-radius:6px;
+    overflow:hidden;flex:1;min-height:0;display:flex;flex-direction:column;
+    box-shadow:0 2px 4px rgba(0,0,0,.05),0 18px 40px -20px rgba(0,0,0,.22);
+  }
+  .bar{display:flex;align-items:center;gap:8px;padding:11px 15px;background:var(--sunk);
+    border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:12px;color:var(--muted);flex:none;}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--rule);flex:none;}
+  .in{padding:30px 34px;overflow:hidden;}
+
+  table{border-collapse:collapse;width:100%;font-size:18px;}
+  th,td{text-align:left;padding:19px 16px;border-bottom:1px solid var(--hair);}
+  thead th{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+  tbody tr:last-child td{border-bottom:0;}
+  td.c{font-weight:600;white-space:nowrap;}
+  .pill{display:inline-block;font-family:var(--mono);font-size:13px;padding:5px 11px;border-radius:12px;
+    background:var(--accent-soft);color:var(--accent);white-space:nowrap;}
+  .pill.done{background:rgba(44,106,68,.13);color:var(--good);}
+  .pill.wait{background:var(--ochre-bg);color:var(--ochre);}
+
+  .ph{font-family:var(--display);font-weight:600;font-size:30px;margin:0 0 22px;}
+  .attr{display:grid;grid-template-columns:190px 1fr;gap:19px 26px;font-size:17px;line-height:1.5;margin:0;}
+  .attr dt{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+  .attr dd{margin:0;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;}
+  .chip{font-family:var(--mono);font-size:13px;padding:4px 10px;background:var(--sunk);border-radius:3px;}
+  .chip.no{background:rgba(154,47,42,.12);color:var(--bad);text-decoration:line-through;}
+
+  pre{margin:0;font-family:var(--mono);font-size:14px;line-height:1.65;white-space:pre-wrap;color:var(--ink);}
+  pre .cmt{color:var(--muted);}
+</style>
+
+<div class="shot" id="shot1">
+  <div class="cap"><span class="n">01</span><span class="t">A voice profile your writers can follow</span></div>
+  <div class="frame">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Kettleridge Logistics — Voice profile</span></div>
+    <div class="in">
+      <p class="ph">Kettleridge Logistics</p>
+      <dl class="attr">
+        <dt>Register</dt><dd>Plain and technical. Talks to operations managers, not executives. Assumes the reader knows what a load board is.</dd>
+        <dt>Sentence rhythm</dt><dd>Short. Average 14 words, rarely over 25. One idea per sentence. Paragraphs of 2–3 sentences.</dd>
+        <dt>Point of view</dt><dd>"We" for the company, "you" for the reader. Never "one" or the passive voice.</dd>
+        <dt>Evidence habit</dt><dd>Every claim carries a number or a named customer. No adjective survives without one.</dd>
+        <dt>Banned words</dt><dd><div class="chips"><span class="chip no">revolutionise</span><span class="chip no">seamless</span><span class="chip no">game-changer</span><span class="chip no">leverage (verb)</span><span class="chip no">in today's fast-paced</span></div></dd>
+        <dt>House words</dt><dd><div class="chips"><span class="chip">lane</span><span class="chip">dwell time</span><span class="chip">on-time rate</span><span class="chip">dispatcher</span><span class="chip">backhaul</span></div></dd>
+        <dt>Formatting</dt><dd>Sub-heads every 200 words. Bulleted lists max 5 items. Oxford comma. Numerals for anything over ten.</dd>
+        <dt>Tells</dt><dd>Opens on the operational problem, never on the company. Closes with the next concrete step.</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<div class="shot" id="shot2">
+  <div class="cap"><span class="n">02</span><span class="t">Every client's voice in one place</span></div>
+  <div class="frame">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Voice Vault — All clients</span></div>
+    <div class="in">
+      <table>
+        <thead><tr><th>Client</th><th>Status</th><th>Register</th><th>Reading age</th><th>Last audit</th></tr></thead>
+        <tbody>
+          <tr><td class="c">Kettleridge Logistics</td><td><span class="pill done">Profile live</span></td><td>Plain / technical</td><td>Grade 9</td><td>12 Aug</td></tr>
+          <tr><td class="c">Verity Dental Group</td><td><span class="pill done">Profile live</span></td><td>Warm / reassuring</td><td>Grade 7</td><td>28 Jul</td></tr>
+          <tr><td class="c">Foxglove Studio</td><td><span class="pill">In intake</span></td><td>Playful / spare</td><td>Grade 8</td><td>—</td></tr>
+          <tr><td class="c">Marchetti &amp; Sons</td><td><span class="pill wait">Awaiting kickoff</span></td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="shot" id="shot3">
+  <div class="cap"><span class="n">03</span><span class="t">The prompt block that ends the rewriting</span></div>
+  <div class="frame">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Generated prompt block — hand to any writer</span></div>
+    <div class="in">
+<pre><span class="cmt"># Paste above your brief. Works in ChatGPT, Claude, or your CMS assistant.</span>
+
+You are writing as Kettleridge Logistics, a freight operations platform.
+Your reader is a dispatcher or ops manager at a mid-size carrier. They
+know the industry; do not explain it to them.
+
+VOICE
+- Sentences average 14 words. One idea each. Never exceed 25.
+- "We" = Kettleridge. "You" = the reader. Active voice only.
+- Every claim carries a number or a named customer. No exceptions.
+
+NEVER USE
+revolutionise · seamless · game-changer · leverage (as a verb)
+"in today's fast-paced" · "solutions" as a noun for the product
+
+BEFORE YOU RETURN THE DRAFT
+Check it against every rule above and fix what fails. Then list anything
+you were unsure of at the bottom under "Flags".</pre>
+    </div>
+  </div>
+</div>
