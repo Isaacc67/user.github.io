@@ -1,0 +1,329 @@
+<!-- Gumroad custom landing page for product xyermr (Client Voice Vault).
+     Self-contained: no external fonts, scripts, images or fetches.
+     Mockups are HTML/CSS, not images, so nothing depends on a media host.
+     Buy elements: three <button data-gumroad-action="buy">. -->
+<style>
+  :root{
+    --paper:#F1F1F4; --card:#FFFFFF; --sunk:#E7E7EC; --ink:#16151A; --muted:#5F5D6B;
+    --rule:#D6D5DE; --hair:#E3E2E9; --accent:#4632B8; --accent-ink:#FFFFFF;
+    --accent-soft:#EAE7F9; --good:#2C6A44; --bad:#9A2F2A; --ochre:#7C5A0E; --ochre-bg:#F7EFDC;
+    --display:Georgia,"Times New Roman",serif;
+    --body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#131218; --card:#1C1B23; --sunk:#24222C; --ink:#EDECF2; --muted:#A19FAE;
+      --rule:#322F3D; --hair:#2A2833; --accent:#A08CFF; --accent-ink:#17142B;
+      --accent-soft:#241F3C; --good:#6FBE87; --bad:#E0857E; --ochre:#D9AE5C; --ochre-bg:#2A2318;
+    }
+  }
+  *{box-sizing:border-box;}
+  .cvv{
+    background:var(--paper);color:var(--ink);font-family:var(--body);
+    font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased;
+    margin:0;padding:0;
+  }
+  .cvv .wrap{max-width:880px;margin:0 auto;padding:0 22px 84px;}
+  .cvv p{max-width:62ch;}
+  .cvv :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .cvv .lab{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+
+  .cvv .notice{
+    background:var(--ochre-bg);border-bottom:1px solid var(--ochre);
+    margin:0 -22px;padding:11px 22px;text-align:center;
+    font-family:var(--mono);font-size:12.5px;color:var(--ochre);line-height:1.5;
+  }
+
+  .cvv header.hero{padding:60px 0 50px;display:flex;flex-direction:column;gap:22px;}
+  .cvv h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(34px,6vw,58px);line-height:1.05;letter-spacing:-.018em;
+    margin:0;max-width:15ch;text-wrap:balance;
+  }
+  .cvv .sub{
+    font-family:var(--display);font-size:clamp(18px,2.5vw,22px);line-height:1.48;
+    color:var(--muted);margin:0;max-width:47ch;
+  }
+  .cvv .buy{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:6px;}
+  .cvv .btn{
+    display:inline-block;background:var(--accent);color:var(--accent-ink);
+    font-family:var(--body);font-weight:700;font-size:16px;
+    padding:15px 28px;border:0;border-radius:3px;cursor:pointer;line-height:1.2;
+  }
+  .cvv .btn:hover{filter:brightness(.92);}
+  .cvv .price{font-family:var(--mono);font-size:13px;color:var(--muted);line-height:1.55;}
+  .cvv .price .now{color:var(--ink);font-size:18px;font-weight:600;}
+
+  .cvv section{padding:44px 0;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:20px;}
+  .cvv h2{
+    font-family:var(--display);font-weight:700;font-size:clamp(24px,3.4vw,32px);
+    line-height:1.2;letter-spacing:-.012em;margin:0;max-width:23ch;text-wrap:balance;
+  }
+  .cvv h3{font-family:var(--body);font-weight:700;font-size:15.5px;margin:0;}
+
+  .cvv .pain{display:flex;flex-direction:column;gap:13px;}
+  .cvv .pain div{display:grid;grid-template-columns:28px 1fr;gap:13px;align-items:start;}
+  .cvv .pain .n{font-family:var(--mono);color:var(--bad);font-size:14px;padding-top:3px;}
+  .cvv .pain p{margin:0;}
+  .cvv .lede{font-size:17.5px;}
+
+  .cvv .shot{display:flex;flex-direction:column;gap:11px;}
+  .cvv .cap{font-family:var(--mono);font-size:11.5px;color:var(--muted);line-height:1.5;}
+  .cvv .cap b{color:var(--ink);font-weight:600;}
+  .cvv .frame{background:var(--card);border:1px solid var(--rule);border-radius:5px;overflow:hidden;}
+  .cvv .bar{
+    display:flex;align-items:center;gap:7px;padding:9px 13px;background:var(--sunk);
+    border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:11.5px;color:var(--muted);
+  }
+  .cvv .dot{width:9px;height:9px;border-radius:50%;background:var(--rule);flex:none;}
+  .cvv .fb{padding:18px;overflow-x:auto;}
+
+  .cvv table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px;}
+  .cvv th,.cvv td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--hair);vertical-align:top;}
+  .cvv thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  .cvv tbody tr:last-child td{border-bottom:0;}
+  .cvv td.c{font-weight:600;white-space:nowrap;}
+  .cvv .pill{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:10px;background:var(--accent-soft);color:var(--accent);white-space:nowrap;}
+  .cvv .pill.on{background:rgba(44,106,68,.14);color:var(--good);}
+  .cvv .pill.wait{background:var(--ochre-bg);color:var(--ochre);}
+
+  .cvv .ph{font-family:var(--display);font-weight:700;font-size:20px;margin:0 0 14px;}
+  .cvv dl.attr{display:grid;grid-template-columns:150px 1fr;gap:10px 18px;font-size:13.5px;margin:0;}
+  .cvv dl.attr dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+  .cvv dl.attr dd{margin:0;}
+  .cvv .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .cvv .chip{font-family:var(--mono);font-size:11px;padding:2px 8px;background:var(--sunk);border-radius:3px;}
+  .cvv .chip.no{background:rgba(154,47,42,.13);color:var(--bad);text-decoration:line-through;}
+
+  .cvv pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.62;white-space:pre-wrap;color:var(--ink);}
+  .cvv pre .cmt{color:var(--muted);}
+
+  .cvv .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);}
+  .cvv .cell{background:var(--card);padding:17px 19px;display:flex;flex-direction:column;gap:6px;}
+  .cvv .cell p{margin:0;font-size:14px;color:var(--muted);}
+
+  .cvv .fit{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:26px;}
+  .cvv .fit ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;}
+  .cvv .fit li{display:grid;grid-template-columns:19px 1fr;gap:9px;font-size:15px;align-items:start;}
+  .cvv .fit .m{font-family:var(--mono);padding-top:1px;}
+  .cvv .yes .m{color:var(--good);} .cvv .no .m{color:var(--bad);}
+
+  .cvv .deal{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:23px 25px;display:flex;flex-direction:column;gap:12px;}
+  .cvv .deal p{margin:0;}
+
+  .cvv .qa{display:flex;flex-direction:column;gap:22px;}
+  .cvv .qa .q{font-family:var(--body);font-weight:700;font-size:15.5px;margin:0 0 5px;}
+  .cvv .qa p{margin:0;color:var(--muted);font-size:15px;}
+
+  .cvv .close{display:flex;flex-direction:column;gap:18px;align-items:flex-start;padding-top:44px;border-top:1px solid var(--rule);}
+  .cvv footer{padding-top:30px;font-size:12.5px;color:var(--muted);}
+  .cvv footer p{max-width:70ch;margin:0 0 8px;}
+  .cvv .rev{font-family:var(--mono);font-size:11.5px;color:var(--muted);}
+
+  @media (max-width:600px){
+    .cvv dl.attr{grid-template-columns:1fr;gap:3px 0;}
+    .cvv dl.attr dd{margin-bottom:10px;}
+  }
+</style>
+
+<div class="cvv">
+<div class="wrap">
+
+  <div class="notice"><b>Pre-order</b> — the Vault is not built yet. Founding price, delivered within 7 days of purchase, or your money back.</div>
+
+  <header class="hero">
+    <span class="lab">Notion template for agency content teams</span>
+    <h1>Stop rewriting your freelancers' work to fix the tone.</h1>
+    <p class="sub">The Client Voice Vault turns a kickoff call and a pile of old posts into a voice profile any writer can follow — and a prompt block that gets AI on-brand the first time.</p>
+    <div class="buy">
+      <button type="button" class="btn" data-gumroad-action="buy">Pre-order now</button>
+      <span class="price">
+        <span class="now" data-gumroad-field="price">$49</span> founding price, rising to $99 at launch<br>
+        Ships within 7 days. Full refund if it doesn't.
+      </span>
+    </div>
+    <span class="rev" data-gumroad-field="review-count">Be the first to review this product</span>
+  </header>
+
+  <section>
+    <span class="lab">The problem</span>
+    <h2>Every client sounds different. Every freelancer sounds like themselves.</h2>
+    <div class="pain">
+      <div><span class="n">01</span><p>A new client hands over brand PDFs, a two-hour kickoff recording, and three years of old posts. Someone has to read all of it and work out how this client actually sounds.</p></div>
+      <div><span class="n">02</span><p>That someone writes half a page of guidance. Every freelancer reads it differently. Drafts come back in four different voices.</p></div>
+      <div><span class="n">03</span><p>You rewrite them. Not for substance — for tone. Every week, on every client.</p></div>
+      <div><span class="n">04</span><p>A new writer joins and takes six weeks to sound right. The person who knew the voice leaves, and it goes with them.</p></div>
+    </div>
+    <p class="lede">The voice was never written down in a form anyone could execute. That's a structure problem, not a talent problem.</p>
+  </section>
+
+  <section>
+    <span class="lab">What you get</span>
+    <h2>A repeatable intake that ends in something a writer can follow.</h2>
+    <p>Drop in the transcript, the brand docs, and a handful of posts the client loved. Work through the guided prompt sequence. Out comes a structured voice profile — and a prompt block your writers paste into whatever AI tool they already use.</p>
+
+    <div class="shot">
+      <div class="frame">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Voice Vault — All clients</span></div>
+        <div class="fb">
+          <table>
+            <thead><tr><th>Client</th><th>Status</th><th>Register</th><th>Reading age</th><th>Last audit</th></tr></thead>
+            <tbody>
+              <tr><td class="c">Kettleridge Logistics</td><td><span class="pill on">Profile live</span></td><td>Plain / technical</td><td>Grade 9</td><td>12 Aug</td></tr>
+              <tr><td class="c">Verity Dental Group</td><td><span class="pill on">Profile live</span></td><td>Warm / reassuring</td><td>Grade 7</td><td>28 Jul</td></tr>
+              <tr><td class="c">Foxglove Studio</td><td><span class="pill">In intake</span></td><td>Playful / spare</td><td>Grade 8</td><td>—</td></tr>
+              <tr><td class="c">Marchetti &amp; Sons</td><td><span class="pill wait">Awaiting kickoff</span></td><td>—</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="cap"><b>1 · The vault.</b> Every client's voice in one place, with an audit date so profiles don't quietly rot. Example data shown.</p>
+    </div>
+
+    <div class="shot">
+      <div class="frame">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Kettleridge Logistics — Voice profile</span></div>
+        <div class="fb">
+          <p class="ph">Kettleridge Logistics</p>
+          <dl class="attr">
+            <dt>Register</dt><dd>Plain and technical. Talks to operations managers, not executives. Assumes the reader knows what a load board is.</dd>
+            <dt>Sentence rhythm</dt><dd>Short. Average 14 words, rarely over 25. One idea per sentence. Paragraphs of 2–3 sentences.</dd>
+            <dt>Point of view</dt><dd>"We" for the company, "you" for the reader. Never "one" or the passive voice.</dd>
+            <dt>Evidence habit</dt><dd>Every claim carries a number or a named customer. No adjective survives without one.</dd>
+            <dt>Banned words</dt><dd><div class="chips"><span class="chip no">revolutionise</span><span class="chip no">seamless</span><span class="chip no">game-changer</span><span class="chip no">leverage (verb)</span><span class="chip no">in today's fast-paced</span></div></dd>
+            <dt>House words</dt><dd><div class="chips"><span class="chip">lane</span><span class="chip">dwell time</span><span class="chip">on-time rate</span><span class="chip">dispatcher</span><span class="chip">backhaul</span></div></dd>
+            <dt>Formatting</dt><dd>Sub-heads every 200 words. Bulleted lists max 5 items. Oxford comma. Numerals for anything over ten.</dd>
+            <dt>Tells</dt><dd>Opens on the operational problem, never on the company. Closes with the next concrete step.</dd>
+          </dl>
+        </div>
+      </div>
+      <p class="cap"><b>2 · The profile.</b> Specific enough to be checked against a draft. Example client, illustrative content.</p>
+    </div>
+
+    <div class="shot">
+      <div class="frame">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Generated prompt block — hand to any writer</span></div>
+        <div class="fb">
+<pre><span class="cmt"># Paste above your brief. Works in ChatGPT, Claude, or your CMS assistant.</span>
+
+You are writing as Kettleridge Logistics, a freight operations
+platform. Your reader is a dispatcher or ops manager at a mid-size
+carrier. They know the industry; do not explain it to them.
+
+VOICE
+- Sentences average 14 words. One idea each. Never exceed 25.
+- Paragraphs of 2-3 sentences.
+- "We" = Kettleridge. "You" = the reader. Active voice only.
+- Every claim carries a number or a named customer. No exceptions.
+
+NEVER USE
+revolutionise · seamless · game-changer · leverage (as a verb)
+"in today's fast-paced" · "solutions" as a noun for the product
+
+STRUCTURE
+Open on the operational problem, not on Kettleridge. Sub-head every
+200 words. Lists max 5 items. Close on the next concrete step.
+
+BEFORE YOU RETURN THE DRAFT
+Check it against every rule above and fix what fails. Then list
+anything you were unsure of at the bottom under "Flags".</pre>
+        </div>
+      </div>
+      <p class="cap"><b>3 · The prompt block.</b> Generated from the profile. This is what actually ends the rewriting.</p>
+    </div>
+
+    <div class="buy">
+      <button type="button" class="btn" data-gumroad-action="buy">Pre-order at <span data-gumroad-field="price">$49</span></button>
+    </div>
+  </section>
+
+  <section>
+    <span class="lab">Contents</span>
+    <h2>What's in the file</h2>
+    <div class="grid">
+      <div class="cell"><h3>The vault database</h3><p>One row per client, with profile status, audit dates, and every asset linked to the client it belongs to.</p></div>
+      <div class="cell"><h3>The intake sequence</h3><p>Eleven prompts in order, run against a transcript and past content. Each fills a named field in the profile.</p></div>
+      <div class="cell"><h3>The profile template</h3><p>Fourteen fields covering register, rhythm, POV, evidence habits, banned and house words, formatting, and structural tells.</p></div>
+      <div class="cell"><h3>The prompt-block generator</h3><p>Assembles the profile into a paste-ready block, in four variants: long-form, social, email, and landing copy.</p></div>
+      <div class="cell"><h3>The drift audit</h3><p>A quarterly check that scores recent published work against the profile, so you catch voice drift before the client does.</p></div>
+      <div class="cell"><h3>The writer handoff view</h3><p>A filtered view a freelancer can be given access to — the prompt block and the rules, and nothing else in your workspace.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="lab">Fit</span>
+    <h2>Who this is for, and who it isn't</h2>
+    <div class="fit">
+      <div class="yes">
+        <h3>Buy it if</h3>
+        <ul>
+          <li><span class="m">✓</span><span>You run content for more than two clients and route drafts through freelancers.</span></li>
+          <li><span class="m">✓</span><span>You edit for tone more often than for substance.</span></li>
+          <li><span class="m">✓</span><span>Onboarding a new writer costs you weeks of rewrites.</span></li>
+          <li><span class="m">✓</span><span>You already use Notion, or don't mind starting.</span></li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3>Skip it if</h3>
+        <ul>
+          <li><span class="m">✗</span><span>You write everything yourself for one brand. You already hold the voice in your head.</span></li>
+          <li><span class="m">✗</span><span>You want software that writes the posts. This structures the instructions; your writers still write.</span></li>
+          <li><span class="m">✗</span><span>You need it inside Google Docs or Airtable. Notion only at launch.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="lab">The deal</span>
+    <h2>You're buying something that doesn't exist yet.</h2>
+    <div class="deal">
+      <p>Being straight with you: this is a pre-order. The Vault is specified, not built. I'm selling it first because I'd rather find out now whether content leads actually want this than spend a month building it on a hunch.</p>
+      <p><b>What you get:</b> the finished template within 7 days, the founding price locked at half of $99, and every future update free.</p>
+      <p><b>If I miss the 7 days,</b> or you open it and it isn't what this page described, reply to your receipt and I'll refund you in full. No forms, no questions.</p>
+      <p><b>What I'd like in return</b> — not required — is fifteen minutes on a call about how your team handles client voice today. That conversation shapes what gets built.</p>
+    </div>
+  </section>
+
+  <section class="qa">
+    <span class="lab">Questions</span>
+    <h2>Before you buy</h2>
+    <div>
+      <p class="q">Why not just tell ChatGPT to "write in our client's voice"?</p>
+      <p>Because "our client's voice" isn't information — it's a gesture at information. The model fills the gap with its own defaults, which is exactly why AI drafts all sound the same. A profile that names the sentence length, the banned words, and the structural tells gives it something to follow, and gives you something to check the draft against.</p>
+    </div>
+    <div>
+      <p class="q">Does this work with Claude, ChatGPT, Gemini?</p>
+      <p>All of them. The output is plain text you paste in. Nothing is locked to a provider, and nothing breaks when you switch.</p>
+    </div>
+    <div>
+      <p class="q">How long does one client take to set up?</p>
+      <p>Around 30 minutes with a kickoff transcript and five pieces of content the client has approved. The eleven-prompt sequence does the extraction; you're editing its answers, not writing from scratch.</p>
+    </div>
+    <div>
+      <p class="q">Is this just a prompt pack?</p>
+      <p>No. Prompt packs give you prompts and leave you to manage the output. This is a database of client profiles, a pipeline that produces them, and a generated artefact your writers use. The prompts are one part of it.</p>
+    </div>
+    <div>
+      <p class="q">I use Airtable, not Notion.</p>
+      <p>Notion only at launch. If enough buyers ask for Airtable, I'll port it and you'll get it free — say so when you order.</p>
+    </div>
+    <div>
+      <p class="q">Who's building this?</p>
+      <p>One person, working in the open. That's also why the refund promise is unconditional: a solo builder who burns early buyers doesn't get a second product.</p>
+    </div>
+  </section>
+
+  <div class="close">
+    <h2>Lock the founding price.</h2>
+    <p><span data-gumroad-field="price">$49</span> now, $99 at launch. Delivered within 7 days or refunded in full.</p>
+    <button type="button" class="btn" data-gumroad-action="buy">Pre-order the Client Voice Vault</button>
+  </div>
+
+  <footer>
+    <p>Client names, profiles, and data shown on this page are illustrative examples, not real customers. No testimonials appear here because there aren't any yet — this is a pre-order for a product that hasn't shipped.</p>
+  </footer>
+
+</div>
+</div>
